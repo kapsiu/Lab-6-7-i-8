@@ -1,8 +1,6 @@
 name: Build and Upload
 
 on:
-  schedule:
-    - cron: '0 0 * * 1'
   workflow_dispatch:
 
 jobs:
@@ -18,10 +16,6 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-
     - name: Run installResources.ps1
       shell: pwsh
       run: ./installResources.ps1
@@ -33,5 +27,5 @@ jobs:
     - name: Upload .exe artifact
       uses: actions/upload-artifact@v3
       with:
-        name: built-exe
+        name: built
         path: dist/main.exe
