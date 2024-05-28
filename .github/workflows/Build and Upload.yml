@@ -1,0 +1,37 @@
+name: Build and Upload
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+
+    - name: Run installResources.ps1
+      shell: pwsh
+      run: ./installResources.ps1
+
+    - name: Build project to .exe
+      run: |
+        pyinstaller --onefile main.py
+
+    - name: Upload .exe artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: built-exe
+        path: dist/main.exe
