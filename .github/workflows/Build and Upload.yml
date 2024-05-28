@@ -28,7 +28,7 @@ jobs:
 
     - name: Build project to .exe
       run: |
-        pyinstaller --onefile main.py
+        pyinstaller.exe --onefile main.py
 
     - name: Upload .exe artifact
       uses: actions/upload-artifact@v3
